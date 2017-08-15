@@ -517,12 +517,14 @@ void RandomCodeOptions::addAddress(Address const& _address, AddressType _type)
 	{
 		case AddressType::CALLONLY:
 			callAddressList.push_back(_address);
-		break;
+			break;
 		case AddressType::ALL:
 		case AddressType::ACCOUNT:
-		default:
 			accountAddressList.push_back(_address);
 			callAddressList.push_back(_address);
+			break;
+		default:
+			BOOST_ERROR("RandomCodeOptions::addAddress: Unexpected AddressType!");
 		break;
 	}
 }
@@ -538,7 +540,6 @@ Address RandomCodeOptions::getRandomAddress(AddressType _type) const
 		case AddressType::ACCOUNT:
 			return accountAddressList[(int)RandomCode::randomUniInt(0, accountAddressList.size())];
 		case AddressType::ALL:
-		default:
 			//if not random address then chose from both lists
 			if (test::RandomCode::randomPercent() > randomAddressProbability)
 			{
@@ -549,6 +550,9 @@ Address RandomCodeOptions::getRandomAddress(AddressType _type) const
 			}
 			else
 				return Address(RandomCode::rndByteSequence(20));
+		default:
+			BOOST_ERROR("RandomCodeOptions::getRandomAddress: Unexpected AddressType!");
+			return ZeroAddress;
 	}
 }
 
