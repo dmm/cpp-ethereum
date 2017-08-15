@@ -520,7 +520,7 @@ void RandomCodeOptions::addAddress(Address const& _address, AddressType _type)
 			break;
 		case AddressType::ALL:
 		case AddressType::ACCOUNT:
-			accountAddressList.push_back(_address);
+			stateAddressList.push_back(_address);
 			callAddressList.push_back(_address);
 			break;
 		default:
@@ -538,7 +538,7 @@ Address RandomCodeOptions::getRandomAddress(AddressType _type) const
 				return ZeroAddress;
 			return callAddressList[(int)RandomCode::randomUniInt(0, callAddressList.size())];
 		case AddressType::ACCOUNT:
-			return accountAddressList[(int)RandomCode::randomUniInt(0, accountAddressList.size())];
+			return stateAddressList[(int)RandomCode::randomUniInt(0, stateAddressList.size())];
 		case AddressType::ALL:
 			//if not random address then chose from both lists
 			if (test::RandomCode::randomPercent() > randomAddressProbability)
@@ -546,7 +546,7 @@ Address RandomCodeOptions::getRandomAddress(AddressType _type) const
 				if (test::RandomCode::randomPercent() < 50)
 					return callAddressList[(int)RandomCode::randomUniInt(0, callAddressList.size())];
 				else
-					return accountAddressList[(int)RandomCode::randomUniInt(0, accountAddressList.size())];
+					return stateAddressList[(int)RandomCode::randomUniInt(0, stateAddressList.size())];
 			}
 			else
 				return Address(RandomCode::rndByteSequence(20));

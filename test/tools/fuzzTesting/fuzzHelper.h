@@ -66,7 +66,7 @@ private:
 	void setWeights();
 	std::map<int, int> mapWeights;
 	std::vector<dev::Address> callAddressList;
-	std::vector<dev::Address> accountAddressList;
+	std::vector<dev::Address> stateAddressList;
 };
 
 enum class SizeStrictness
